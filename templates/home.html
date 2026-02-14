@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerOS | The Ultimate Career Navigator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="nav-item active" onclick="showSection('home')"><i class="fas fa-compass"></i><span class="nav-text">Navigator</span></div>
+        <div class="nav-item" onclick="showSection('resume')"><i class="fas fa-file-alt"></i><span class="nav-text">Resume AI</span></div>
+        <div class="nav-item" onclick="showSection('upload')"><i class="fas fa-file-upload"></i><span class="nav-text">PDF Checker</span></div>
+        <div class="nav-item" onclick="showSection('interview')"><i class="fas fa-user-tie"></i><span class="nav-text">Interview Coach</span></div>
+        <div class="nav-item" onclick="showSection('game')"><i class="fas fa-gamepad"></i><span class="nav-text">Relax Zone</span></div>
+    </nav>
+
+    <div class="main">
+        
+        <div id="home" class="section active">
+            <h1>AI Career Navigator</h1>
+            <div class="card">
+                <h3>Start Your Journey</h3>
+                <input type="text" id="job_title" placeholder="Target Job Title (e.g. Data Scientist)">
+                <textarea id="resume_text" rows="3" placeholder="Paste your Skills / Resume Summary..."></textarea>
+                <textarea id="job_description" rows="3" placeholder="Paste Job Description Requirements..."></textarea>
+                <button onclick="generateRoadmap()">Generate My Plan</button>
+                <div id="loader"></div>
+            </div>
+            <div id="dashboard-results" style="display:none;">
+                <div class="dashboard-grid">
+                    <div class="card stat-box"><div class="stat-num" id="score-display">0%</div><p>Match Score</p></div>
+                    <div class="card stat-box"><div class="stat-num" id="salary-display">$0</div><p>Est. Salary</p></div>
+                </div>
+                <div class="card"><h3>30-Day Roadmap</h3><div id="roadmap-list"></div></div>
+            </div>
+        </div>
+
+        <div id="resume" class="section">
+            <h1>Resume Analyzer</h1>
+            <p style="color:var(--text-dim);">Analyzes the text you pasted in the Navigator tab.</p>
+            <div class="card">
+                <div id="resume-feedback">
+                    <p style="color: var(--text-dim); text-align:center; padding: 20px;">
+                        <i class="fas fa-magic" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                        Generate a roadmap first to unlock Resume Analysis.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="upload" class="section">
+            <h1>Qualification Checker</h1>
+            <div class="card">
+                <h3>Upload Your PDF</h3>
+                <p style="color:var(--text-dim); margin-bottom:15px;">Upload your full Resume (PDF) and paste the Job Description for a deep dive verdict.</p>
+                
+                <input type="file" id="pdfFile" accept=".pdf" style="background: rgba(255,255,255,0.05);">
+                <textarea id="pdf_jd" rows="4" placeholder="Paste Job Description here..."></textarea>
+                <button onclick="checkQualification()">Check Qualification</button>
+            </div>
+
+            <div id="qual-result" class="card" style="display:none; text-align:center;">
+                <div id="qual-badge" class="qual-badge"></div>
+                <h2 id="qual-score"></h2>
+                <p id="qual-msg" style="margin: 15px 0; font-size: 1.1rem;"></p>
+                <div style="text-align:left; margin-top:20px;">
+                    <strong>Matched Skills:</strong> <span id="qual-matched" style="color:#4ade80;"></span><br><br>
+                    <strong>Missing Skills:</strong> <span id="qual-missing" style="color:#f87171;"></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="interview" class="section">
+            <h1>Interview Coach</h1>
+            <div class="dashboard-grid">
+                <div class="card"><h3>Technical Questions</h3><ul id="interview-list" style="padding-left:20px; line-height:1.8;">Generate a roadmap first!</ul></div>
+                <div class="card">
+                    <h3>Skill Validator</h3>
+                    <p id="quiz-question">Loading...</p>
+                    <div id="quiz-options" style="margin-top:10px;"></div>
+                    <p id="quiz-result" style="margin-top:10px; font-weight:bold;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="game" class="section">
+            <h1>Relax Zone: Cyber Snake</h1>
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+            <div style="text-align:center; margin-top:10px;"><button onclick="startGame()">Start Game</button></div>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
